@@ -22,6 +22,6 @@ const StyledGrid = styled.div`
   z-index: 10;
 `;
 
-export const Grid = () => {
-  return <StyledGrid />;
+export const Grid = ({ id }) => {
+  return <StyledGrid id={id} />;
 };
