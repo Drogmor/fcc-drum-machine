@@ -1,3 +1,9 @@
+* {
+  color: rgb(211, 242, 243);
+}
+body {
+  background: #444;
+}
 .App {
   font-family: sans-serif;
   text-align: center;
