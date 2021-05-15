@@ -3,54 +3,63 @@ export const SB1 = [
     keyCode: 81,
     keyPress: "Q",
     sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3",
-    sampleName: "Crash"
+    sampleName: "Crash",
+    id: "crash"
   },
   {
     keyCode: 87,
     keyPress: "W",
     sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3",
-    sampleName: "Ride Bell"
+    sampleName: "Ride Bell",
+    id: "ride-bell"
   },
   {
     keyCode: 69,
     keyPress: "E",
     sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3",
-    sampleName: "Ride"
+    sampleName: "Ride",
+    id: "ride"
   },
   {
     keyCode: 65,
     keyPress: "A",
     sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3",
-    sampleName: "Closed HH"
+    sampleName: "Closed HH",
+    id: "closed-hh"
   },
   {
     keyCode: 83,
     keyPress: "S",
     sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3",
-    sampleName: "Mid Tom"
+    sampleName: "Mid Tom",
+    id: "mid-tom"
   },
   {
     keyCode: 68,
     keyPress: "D",
     sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3",
-    sampleName: "High Tom"
+    sampleName: "High Tom",
+    id: "high-tom"
   },
   {
     keyCode: 90,
     keyPress: "Z",
     sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3",
-    sampleName: "Kick drum"
+    sampleName: "Kick drum",
+    id: "kick-drum"
   },
   {
     keyCode: 88,
     keyPress: "X",
     sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3",
-    sampleName: "Open HH"
+    sampleName: "Open HH",
+    id: "open-hh"
   },
   {
     keyCode: 67,
     keyPress: "C",
     sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3",
-    sampleName: "Snare"
+    sampleName: "Snare",
+    id: "snare"
   }
 ];

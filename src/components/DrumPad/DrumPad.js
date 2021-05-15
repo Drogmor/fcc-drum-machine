@@ -77,19 +77,20 @@ const StyledDrumPad = styled.button`
   }
 `;
 
-export const DrumPad = ({ id, onClick, keyPress, name, sample }) => {
+export const DrumPad = ({ id, audioId, onClick, keyPress, name, sample }) => {
   const [playSound, setPlaySound] = useState(false);
   const [coords, setCoords] = useState({
     x: -1,
     y: -1
   });
   const [isRippling, setIsRippling] = useState(false);
+  const [keyPressed, setKeyPressed] = useState(false);
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
     setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     onClick && onClick(e);
-    setPlaySound((playSound) => !playSound);
+    document.getElementById(audioId).play();
   };
 
   useEffect(() => {
@@ -103,9 +104,39 @@ export const DrumPad = ({ id, onClick, keyPress, name, sample }) => {
     !isRippling && setCoords({ x: -1, y: -1 });
   }, [isRippling]);
 
-  // useEffect(() => {
-  //   setPlaySound((playSound) => !playSound);
-  // }, [playSound]);
+  useEffect(() => {
+    // If pressed key is our target key then set to true
+    function downHandler({ key }) {
+      for (const sample of SB1) {
+        for (const k in sample) {
+          if (key === sample[k]) {
+            setKeyPressed(true);
+            document.getElementById(sample[1]).play();
+          }
+        }
+      }
+    }
+    // If released key is our target key then set to false
+    const upHandler = ({ key }) => {
+      for (const sample of SB1) {
+        for (const k in sample) {
+          if (key === sample[k]) {
+            setKeyPressed(false);
+          }
+        }
+      }
+    };
+
+    // Add event listeners
+    window.addEventListener("keydown", downHandler);
+    window.addEventListener("keyup", upHandler);
+
+    // Remove event listeners on cleanup
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+      window.removeEventListener("keyup", upHandler);
+    };
+  });
 
   return (
     <DrumPadWrapper position={keyPress}>
@@ -117,7 +148,7 @@ export const DrumPad = ({ id, onClick, keyPress, name, sample }) => {
       >
         {isRippling ? <span style={{ left: coords.x, top: coords.y }} /> : ""}
         {name}
-        <audio id={keyPress} src={playSound ? sample : "#"} />
+        <audio className="clip" id={audioId} src={sample} />
       </StyledDrumPad>
     </DrumPadWrapper>
   );
