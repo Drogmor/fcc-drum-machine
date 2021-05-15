@@ -3,9 +3,10 @@ import styled, { keyframes } from "styled-components";
 
 const DrumPadWrapper = styled.div`
   background: transparent;
+  border-radius: 5px;
   width: 100%;
   height: 100%;
-  grid-area: ${(props) => props.keyNumber};
+  grid-area: ${(props) => props.position};
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
@@ -29,39 +30,58 @@ const rippleEffect = keyframes`
 }
 `;
 
+const neon = keyframes`
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #FF1177;    
+  }
+  to {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
+  }
+}
+`;
+
 const StyledDrumPad = styled.button`
   font-family: "Bungee";
   background: transparent;
-  color: #fff;
+  color: ${(props) => props.textColor || "#fff"};
   font-weight: 400;
   cursor: pointer;
-  font-size: 40px;
+  font-size: 4vw;
+  line-height: 4vw;
   user-select: none;
   border-top: none;
   border-left: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
+  text-shadow: 0 0 3px #fff, 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff1177,
+    0 0 20px #ff1177, 0 0 30px #ff1177, 0 0 40px #ff1177, 0 0 55px #ff1177;
+  transition: all 0.2s linear;
   :hover {
     background: rgba(255, 255, 255, 0.05);
-    border-bottom: inset 2px solid rgba(255, 255, 255, 0.08);
-    border-right: inset 2px solid rgba(255, 255, 255, 0.08);
+    border-bottom: inset 2px solid rgba(255, 255, 255, 0.1);
+    border-right: inset 2px solid rgba(255, 255, 255, 0.1);
+    animation: ${neon} 1s ease-in-out infinite alternate;
   }
   span {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     position: absolute;
     background: rgba(255, 255, 255, 0.2);
     display: block;
     content: "";
-    border-radius: 9999px;
+    border-radius: 100%;
     opacity: 1;
     animation: 0.9s ease 1 forwards ${rippleEffect};
   }
 `;
 
-export const DrumPad = ({ children, onClick, key, name, type, sample }) => {
+export const DrumPad = ({ onClick, keyPress, name, type, sample }) => {
+  const [playSound, setPlaySound] = useState({
+    sample: "",
+    play: false
+  });
   const [coords, setCoords] = useState({
     x: -1,
     y: -1
@@ -72,7 +92,6 @@ export const DrumPad = ({ children, onClick, key, name, type, sample }) => {
     const rect = e.target.getBoundingClientRect();
     setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     onClick && onClick(e);
-    console.log(`${coords.x} -- ${coords.y}`);
   };
 
   useEffect(() => {
@@ -87,8 +106,12 @@ export const DrumPad = ({ children, onClick, key, name, type, sample }) => {
   }, [isRippling]);
 
   return (
-    <DrumPadWrapper keyNumber={key}>
-      <StyledDrumPad className="drum-pad" onClick={handleClick}>
+    <DrumPadWrapper position={keyPress}>
+      <StyledDrumPad
+        className="drum-pad"
+        textColor="#fff"
+        onClick={handleClick}
+      >
         {isRippling ? <span style={{ left: coords.x, top: coords.y }} /> : ""}
         {name}
       </StyledDrumPad>

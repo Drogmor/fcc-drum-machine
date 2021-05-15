@@ -1,16 +1,18 @@
 import styled from "styled-components";
 
 const StyledPads = styled.div`
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
   height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  gap: 1em 01em;
+  gap: 0;
   grid-template-areas:
-    "button1 button2 button3"
-    "button4 button5 button6"
-    "button7 button8 button9";
+    "Q W E"
+    "A S D"
+    "Z X C";
   grid-area: drumPad;
 `;
 
