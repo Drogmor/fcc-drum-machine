@@ -20,8 +20,9 @@ const StyledGrid = styled.div`
     "drumPad controls"
     "footer footer";
   z-index: 10;
+  padding: 1em;
 `;
 
-export const Grid = ({ id }) => {
-  return <StyledGrid id={id} />;
+export const Grid = ({ id, children }) => {
+  return <StyledGrid id={id}>{children}</StyledGrid>;
 };

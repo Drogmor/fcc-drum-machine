@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { Button } from "../Button";
 
-const StyledPads = styled(Button)`
+const StyledPads = styled.div`
+  height: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -13,6 +14,10 @@ const StyledPads = styled(Button)`
   grid-area: drumPad;
 `;
 
-export const Pads = ({ id, numberOfPads }) => {
-  return <StyledPads id={id} numberOfPads={numberOfPads} />;
+export const Pads = ({ id, numberOfPads, children }) => {
+  return (
+    <StyledPads id={id} numberOfPads={numberOfPads}>
+      {children}
+    </StyledPads>
+  );
 };
