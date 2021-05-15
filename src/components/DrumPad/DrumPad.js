@@ -104,26 +104,24 @@ export const DrumPad = ({ id, audioId, onClick, keyPress, name, sample }) => {
     !isRippling && setCoords({ x: -1, y: -1 });
   }, [isRippling]);
 
+  let keys = [81, 87, 69, 65, 83, 68, 90, 88, 67];
   useEffect(() => {
+    let prevKey = "";
     // If pressed key is our target key then set to true
-    function downHandler({ key }) {
-      for (const sample of SB1) {
-        for (const k in sample) {
-          if (key === sample[k]) {
-            setKeyPressed(true);
-            document.getElementById(sample[1]).play();
-          }
-        }
+    function downHandler(e) {
+      if (prevKey === e.keyCode) return;
+      if (keys.includes(e.keyCode)) {
+        setKeyPressed(true);
+        prevKey = e.keyCode;
+        console.log("pressed");
+        document.getElementById(e.key.toUpperCase()).play();
       }
     }
     // If released key is our target key then set to false
-    const upHandler = ({ key }) => {
-      for (const sample of SB1) {
-        for (const k in sample) {
-          if (key === sample[k]) {
-            setKeyPressed(false);
-          }
-        }
+    const upHandler = (e) => {
+      if (keys.includes(e.keyCode)) {
+        setKeyPressed(false);
+        console.log("not pressed");
       }
     };
 
