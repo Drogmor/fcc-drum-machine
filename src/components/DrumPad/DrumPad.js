@@ -77,11 +77,8 @@ const StyledDrumPad = styled.button`
   }
 `;
 
-export const DrumPad = ({ onClick, keyPress, name, type, sample }) => {
-  const [playSound, setPlaySound] = useState({
-    sample: "",
-    play: false
-  });
+export const DrumPad = ({ id, onClick, keyPress, name, sample }) => {
+  const [playSound, setPlaySound] = useState(false);
   const [coords, setCoords] = useState({
     x: -1,
     y: -1
@@ -92,6 +89,7 @@ export const DrumPad = ({ onClick, keyPress, name, type, sample }) => {
     const rect = e.target.getBoundingClientRect();
     setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     onClick && onClick(e);
+    setPlaySound((playSound) => !playSound);
   };
 
   useEffect(() => {
@@ -105,15 +103,21 @@ export const DrumPad = ({ onClick, keyPress, name, type, sample }) => {
     !isRippling && setCoords({ x: -1, y: -1 });
   }, [isRippling]);
 
+  // useEffect(() => {
+  //   setPlaySound((playSound) => !playSound);
+  // }, [playSound]);
+
   return (
     <DrumPadWrapper position={keyPress}>
       <StyledDrumPad
+        id={id}
         className="drum-pad"
         textColor="#fff"
         onClick={handleClick}
       >
         {isRippling ? <span style={{ left: coords.x, top: coords.y }} /> : ""}
         {name}
+        <audio id={keyPress} src={playSound ? sample : "#"} />
       </StyledDrumPad>
     </DrumPadWrapper>
   );

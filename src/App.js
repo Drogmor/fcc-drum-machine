@@ -12,6 +12,7 @@ export default function App() {
           {SB1.map((soundbank) => {
             return (
               <DrumPad
+                id={soundbank.sampleName}
                 keypress={soundbank.keyPress}
                 name={soundbank.keyPress}
               />
