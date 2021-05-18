@@ -1,64 +1,73 @@
 export const SB1 = [
   {
-    keyCode: 81,
+    keyCode: "KeyQ",
     keyPress: "Q",
-    sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3",
+    sampleUrl:
+      "https://retro-pad-samples.s3.eu-central-1.amazonaws.com/classic-drum-kits/kit-01/kit-1-001.wav",
     sampleName: "Crash",
     id: "crash"
   },
   {
-    keyCode: 87,
+    keyCode: "KeyW",
     keyPress: "W",
-    sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3",
+    sampleUrl:
+      "https://retro-pad-samples.s3.eu-central-1.amazonaws.com/classic-electronic-garden/one-shots/synthetic-drums/uglywave-3.wav",
     sampleName: "Ride Bell",
     id: "ride-bell"
   },
   {
-    keyCode: 69,
+    keyCode: "KeyE",
     keyPress: "E",
-    sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3",
+    sampleUrl:
+      "https://retro-pad-samples.s3.eu-central-1.amazonaws.com/classic-electronic-garden/one-shots/synthetic-drums/shaker.wav",
     sampleName: "Ride",
     id: "ride"
   },
   {
-    keyCode: 65,
+    keyCode: "KeyA",
     keyPress: "A",
-    sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3",
+    sampleUrl:
+      "https://retro-pad-samples.s3.eu-central-1.amazonaws.com/classic-electronic-garden/one-shots/synthetic-drums/cs40-hat-2.wav",
     sampleName: "Closed HH",
     id: "closed-hh"
   },
   {
-    keyCode: 83,
+    keyCode: "KeyS",
     keyPress: "S",
-    sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3",
+    sampleUrl:
+      "https://retro-pad-samples.s3.eu-central-1.amazonaws.com/classic-electronic-garden/one-shots/synthetic-drums/fm-watercan.wav",
     sampleName: "Mid Tom",
     id: "mid-tom"
   },
   {
-    keyCode: 68,
+    keyCode: "KeyD",
     keyPress: "D",
-    sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3",
+    sampleUrl:
+      "https://retro-pad-samples.s3.eu-central-1.amazonaws.com/classic-electronic-garden/one-shots/synthetic-drums/fm-metal-bone.wav",
     sampleName: "High Tom",
     id: "high-tom"
   },
   {
-    keyCode: 90,
+    keyCode: "KeyZ",
     keyPress: "Z",
-    sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3",
+    sampleUrl:
+      "https://retro-pad-samples.s3.eu-central-1.amazonaws.com/classic-electronic-garden/one-shots/synthetic-drums/fm-kick.wav",
     sampleName: "Kick drum",
     id: "kick-drum"
   },
   {
-    keyCode: 88,
+    keyCode: "KeyX",
     keyPress: "X",
-    sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3",
+    sampleUrl:
+      "https://retro-pad-samples.s3.eu-central-1.amazonaws.com/classic-electronic-garden/one-shots/synthetic-drums/cs40-hat-1.wav",
     sampleName: "Open HH",
     id: "open-hh"
   },
   {
-    keyCode: 67,
+    keyCode: "KeyC",
     keyPress: "C",
-    sampleUrl: "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3",
+    sampleUrl:
+      "https://retro-pad-samples.s3.eu-central-1.amazonaws.com/classic-electronic-garden/one-shots/synthetic-drums/vsnare.wav",
     sampleName: "Snare",
     id: "snare"
   }

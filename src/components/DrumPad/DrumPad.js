@@ -39,7 +39,14 @@ const neon = keyframes`
   }
 }
 `;
-
+const neon2 = keyframes`
+  from {
+    filter: drop-shadow(0 0 5px #fff)
+  }
+  to {
+    filter: drop-shadow(0 0 10px #fff)
+  }
+}`;
 const StyledDrumPad = styled.button`
   font-family: "Bungee";
   background: transparent;
@@ -55,14 +62,18 @@ const StyledDrumPad = styled.button`
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
-  text-shadow: 0 0 3px #fff, 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff1177,
-    0 0 20px #ff1177, 0 0 30px #ff1177, 0 0 40px #ff1177, 0 0 55px #ff1177;
+  /* text-shadow: 0 0 3px #fff, 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff1177,
+    0 0 20px #ff1177, 0 0 30px #ff1177, 0 0 40px #ff1177, 0 0 55px #ff1177; */
+  filter: drop-shadow(0 0 5px #fff);
   transition: all 0.2s linear;
   :hover {
     background: rgba(255, 255, 255, 0.05);
     border-bottom: inset 2px solid rgba(255, 255, 255, 0.1);
     border-right: inset 2px solid rgba(255, 255, 255, 0.1);
-    animation: ${neon} 1s ease-in-out infinite alternate;
+    animation: ${neon2} 1s ease-in-out infinite alternate;
+  }
+  :focus {
+    outline: none;
   }
   span {
     width: 30px;
@@ -77,20 +88,34 @@ const StyledDrumPad = styled.button`
   }
 `;
 
-export const DrumPad = ({ id, audioId, onClick, keyPress, name, sample }) => {
-  const [playSound, setPlaySound] = useState(false);
+export const DrumPad = ({
+  id,
+  audioId,
+  onClick,
+  keyPress,
+  kcode,
+  name,
+  sample
+}) => {
   const [coords, setCoords] = useState({
     x: -1,
     y: -1
   });
   const [isRippling, setIsRippling] = useState(false);
-  const [keyPressed, setKeyPressed] = useState(false);
+
+  const playSample = () => {
+    const sample = document.getElementById(audioId);
+    if (sample.hasAttribute("src")) {
+      sample.currentTime = 0;
+      sample.play();
+    } else return null;
+  };
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
     setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     onClick && onClick(e);
-    document.getElementById(audioId).play();
+    playSample();
   };
 
   useEffect(() => {
@@ -104,38 +129,6 @@ export const DrumPad = ({ id, audioId, onClick, keyPress, name, sample }) => {
     !isRippling && setCoords({ x: -1, y: -1 });
   }, [isRippling]);
 
-  let keys = [81, 87, 69, 65, 83, 68, 90, 88, 67];
-  useEffect(() => {
-    let prevKey = "";
-    // If pressed key is our target key then set to true
-    function downHandler(e) {
-      if (prevKey === e.keyCode) return;
-      if (keys.includes(e.keyCode)) {
-        setKeyPressed(true);
-        prevKey = e.keyCode;
-        console.log("pressed");
-        document.getElementById(e.key.toUpperCase()).play();
-      }
-    }
-    // If released key is our target key then set to false
-    const upHandler = (e) => {
-      if (keys.includes(e.keyCode)) {
-        setKeyPressed(false);
-        console.log("not pressed");
-      }
-    };
-
-    // Add event listeners
-    window.addEventListener("keydown", downHandler);
-    window.addEventListener("keyup", upHandler);
-
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener("keydown", downHandler);
-      window.removeEventListener("keyup", upHandler);
-    };
-  });
-
   return (
     <DrumPadWrapper position={keyPress}>
       <StyledDrumPad
@@ -146,7 +139,7 @@ export const DrumPad = ({ id, audioId, onClick, keyPress, name, sample }) => {
       >
         {isRippling ? <span style={{ left: coords.x, top: coords.y }} /> : ""}
         {name}
-        <audio className="clip" id={audioId} src={sample} />
+        <audio className="clip" id={audioId} kcode={kcode} src={sample} />
       </StyledDrumPad>
     </DrumPadWrapper>
   );

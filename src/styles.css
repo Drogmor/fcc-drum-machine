@@ -1,4 +1,5 @@
 * {
+  -webkit-font-smoothing: antialised;
   color: rgb(211, 242, 243);
 }
 body {
