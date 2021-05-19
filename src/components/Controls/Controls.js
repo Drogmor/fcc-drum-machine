@@ -1,3 +1,4 @@
+import { useState, useImperativeHandle, forwardRef, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +13,7 @@ const StyledControls = styled.div`
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: flex-start;
+  justify-items: stretch;
   align-content: left;
 `;
 
@@ -39,7 +41,7 @@ const StyledControlBtn = styled.button`
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
-  filter: drop-shadow(0 0 5px #fff);
+  filter: ${(props) => (props.active ? "drop-shadow(0 0 5px #fff)" : "none")};
   transition: all 0.05s ease-in-out;
   padding: 1.2em;
   :hover {
@@ -55,12 +57,12 @@ const StyledControlBtn = styled.button`
 
 const StyledDisplay = styled.div`
   font-family: "Bungee";
+  font-size: 24px;
+  line-height: 24px;
   background: transparent;
   color: ${(props) => props.textColor || "#fff"};
   font-weight: 400;
   cursor: pointer;
-  font-size: 24px;
-  line-height: 24px;
   user-select: none;
   border-top: none;
   border-left: none;
@@ -68,31 +70,54 @@ const StyledDisplay = styled.div`
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
-  filter: drop-shadow(0 0 5px #fff);
+  filter: ${(props) =>
+    props.active
+      ? "drop-shadow(0 0 5px #fff) opacity(100%) blur(0px)"
+      : "blur(2px) opacity(30%)"};
   transition: all 0.05s ease-in-out;
   padding: 1.2em;
 `;
 
-const ControlBtn = ({ name, onClick, children }) => {
+const ControlBtn = ({ name, onClick, active, children }) => {
   return (
-    <StyledControlBtn onClick={onClick}>
+    <StyledControlBtn active={active} onClick={onClick}>
       {name}
       {children}
     </StyledControlBtn>
   );
 };
 
-const ControlDisplay = ({ text, id }) => {
-  return <StyledDisplay id={id}>{text}</StyledDisplay>;
-};
+const ControlDisplay = forwardRef(({ active, id }, ref) => {
+  const [showEffect, setShowEffect] = useState({
+    show: false,
+    value: ""
+  });
+  const setValueRef = useRef();
 
-export const Controls = ({ id, children }) => (
+  useImperativeHandle(ref, () => ({
+    setShow(v) {
+      console.log(showEffect.value);
+      setShowEffect({
+        show: (show) => !show,
+        value: v
+      });
+      console.log(showEffect.value);
+    }
+  }));
+
+  return (
+    <StyledDisplay ref={setValueRef} active={active} id={id}>
+      {showEffect.value}
+    </StyledDisplay>
+  );
+});
+
+export const Controls = ({ id, active, onClick, text, childRef, children }) => (
   <StyledControls id={id}>
-    <ControlBtn>
+    <ControlBtn active={active} onClick={onClick}>
       <FontAwesomeIcon size="24px" icon={faPowerOff} />
     </ControlBtn>
-    <ControlDisplay id="display" text="effect" />
-    <ControlBtn name="PowerOn" />
+    <ControlDisplay id={id} active={active} text={text} ref={childRef} />
     {children}
   </StyledControls>
 );

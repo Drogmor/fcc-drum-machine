@@ -12,7 +12,7 @@ const StyledGrid = styled.div`
   width: 85%;
   margin: 0 auto;
   overflow: hidden;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 200px;
   grid-template-rows: min-content 1fr min-content;
   gap: 01em 01em;
   grid-template-areas:

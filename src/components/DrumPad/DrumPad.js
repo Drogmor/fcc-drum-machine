@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const DrumPadWrapper = styled.div`
   background: transparent;
@@ -30,15 +30,6 @@ const rippleEffect = keyframes`
 }
 `;
 
-const neon = keyframes`
-  from {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #FF1177;    
-  }
-  to {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
-  }
-}
-`;
 const neon2 = keyframes`
   from {
     filter: drop-shadow(0 0 5px #fff)
@@ -62,15 +53,23 @@ const StyledDrumPad = styled.button`
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
-  /* text-shadow: 0 0 3px #fff, 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff1177,
-    0 0 20px #ff1177, 0 0 30px #ff1177, 0 0 40px #ff1177, 0 0 55px #ff1177; */
-  filter: drop-shadow(0 0 5px #fff);
+  filter: ${(props) =>
+    props.active
+      ? "drop-shadow(0 0 5px #fff) opacity(100%) blur(0px)"
+      : "blur(2px) opacity(30%)"};
   transition: all 0.2s linear;
   :hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom: inset 2px solid rgba(255, 255, 255, 0.1);
-    border-right: inset 2px solid rgba(255, 255, 255, 0.1);
-    animation: ${neon2} 1s ease-in-out infinite alternate;
+    background: ${(props) => (props.active ? "rgba(255, 255, 255, 0.05)" : "")};
+    border-bottom: ${(props) =>
+      props.active ? "inset 2px solid rgba(255, 255, 255, 0.1)" : ""};
+    border-right: ${(props) =>
+      props.active ? "inset 2px solid rgba(255, 255, 255, 0.1)" : ""};
+    animation: ${(props) =>
+      props.active
+        ? css`
+            ${neon2} 1s ease-in-out infinite alternate
+          `
+        : "none"};
   }
   :focus {
     outline: none;
@@ -89,6 +88,7 @@ const StyledDrumPad = styled.button`
 `;
 
 export const DrumPad = ({
+  active,
   id,
   audioId,
   onClick,
@@ -133,6 +133,7 @@ export const DrumPad = ({
     <DrumPadWrapper position={keyPress}>
       <StyledDrumPad
         id={id}
+        active={active}
         className="drum-pad"
         textColor="#fff"
         onClick={handleClick}

@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import "./styles.css";
 import { Grid } from "./components/Grid";
 import { Pads } from "./components/Pads";
@@ -7,8 +8,12 @@ import { useEffect, useState } from "react";
 import { Controls } from "./components/Controls";
 
 export default function App() {
-  const [powerOn, setPowerOn] = useState(true);
-  const handlePowerState = () => setPowerOn((powerOn) => !powerOn);
+  const [powerOn, setPowerOn] = useState(false);
+  const childRef = useRef();
+
+  const handlePowerState = () => {
+    setPowerOn((powerOn) => !powerOn);
+  };
   let code = [
     "KeyQ",
     "KeyW",
@@ -26,9 +31,12 @@ export default function App() {
     function downHandler(e) {
       const sample = document.querySelector(`[kcode="${e.code}"]`);
       if (code.includes(e.code) && sample.hasAttribute("src")) {
+        childRef.current.setShow(sample.parentElement.getAttribute("id"));
         sample.currentTime = 0;
         sample.play();
-      } else return null;
+      } else {
+        childRef.current.setShow("Power On");
+      }
     }
     // If released key is our target key then set to false
     const upHandler = (e) => {
@@ -55,6 +63,7 @@ export default function App() {
           {SB1.map((soundbank) => {
             return powerOn ? (
               <DrumPad
+                active
                 key={soundbank.sampleName}
                 id={soundbank.id}
                 keypress={soundbank.keyPress}
@@ -76,7 +85,16 @@ export default function App() {
             );
           })}
         </Pads>
-        <Controls></Controls>
+        {powerOn ? (
+          <Controls
+            childRef={childRef}
+            onClick={handlePowerState}
+            active
+            text="sample"
+          ></Controls>
+        ) : (
+          <Controls onClick={handlePowerState} text="sample"></Controls>
+        )}
       </Grid>
     </div>
   );
